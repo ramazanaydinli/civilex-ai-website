@@ -1,68 +1,66 @@
 name: Deploy Hugo site to GitHub Pages
 
 on:
-  # main dalına her push yapıldığında çalışır
   push:
     branches:
-      - main # Varsayılan dalınızın adı buysa
-
-  # Bu workflow'u Actions sekmesinden manuel olarak da çalıştırmanıza izin verir
+      - main
   workflow_dispatch:
 
-# GitHub Pages'a dağıtım için GITHUB_TOKEN'a gerekli izinleri ayarlar
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Aynı anda sadece bir dağıtıma izin verir, devam eden ve en son sıradaki arasında kuyruğa alınanları atlar.
-# Ancak, bu üretim dağıtımlarının tamamlanmasına izin vermek istediğimiz için devam edenleri iptal ETMEZ.
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  # Derleme işi
-  build:
+  build: # Derleme işi
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout # Kodlarınızı Action ortamına çeker
+      - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: recursive # Temanız bir submodule ise (ki .gitmodules dosyanız var) önemlidir
-          fetch-depth: 0    # Hugo'nun .GitInfo ve .Lastmod için tüm geçmişi alması
+          submodules: recursive
+          fetch-depth: 0
 
-      - name: Setup Hugo # Hugo'yu Action ortamında kurar
-        uses: peaceiris/actions-hugo@v3 # Popüler ve güvenilir bir Hugo action'ı
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: 'latest' # Her zaman en son Hugo versiyonunu kullanır. İsterseniz '0.125.7' gibi spesifik bir versiyon da yazabilirsiniz.
-          extended: true # TailBliss gibi temalar genellikle Hugo'nun 'extended' versiyonunu gerektirir.
+          hugo-version: 'latest'
+          extended: true
 
-      - name: Build # Sitenizi derler
-        # ÖNEMLİ: hugo.toml dosyanızdaki baseURL'in canlı site için doğru ayarlandığından emin olun.
-        # Eğer özel alan adınızı ayarlamadan önce GitHub Pages URL'ini (kullaniciadiniz.github.io/repoadi) test etmek isterseniz,
-        # bu adımı geçici olarak şöyle değiştirebilirsiniz:
-        # run: hugo --minify --baseURL "https://KULLANICI_ADINIZ.github.io/civilex-ai-website/"
-        # Ancak özel alan adı ile yayınlayacağınız için hugo.toml'daki baseURL'in doğru olması yeterlidir.
-        run: hugo --minify # Sitenizi derler ve çıktı dosyalarını küçültür
+      # ---- YENİ ADIMLAR BAŞLANGIÇ ----
+      - name: Setup Node.js # Node.js'i kurar
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Projenizin gereksinimlerine göre '20' gibi farklı bir LTS versiyonu da seçebilirsiniz.
 
-      - name: Setup Pages # GitHub Pages için derlenmiş siteyi hazırlar
+      - name: Install Node.js dependencies # npm bağımlılıklarını kurar
+        # Bu adım, postcss-cli ve tailwindcss gibi araçların package.json dosyanızda
+        # devDependencies altında tanımlı olduğunu varsayar.
+        run: npm ci # 'npm install' yerine 'npm ci' genellikle CI ortamlarında daha hızlı ve güvenilirdir
+      # ---- YENİ ADIMLAR BİTİŞ ----
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Setup Pages
         uses: actions/configure-pages@v5
-
-      - name: Upload artifact # Derlenmiş siteyi (public klasörünü) bir artifact olarak yükler
+        
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Yüklenecek klasörün yolu
           path: './public'
-
-  # Yayınlama işi
-  deploy:
+          
+  deploy: # Yayınlama işi
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }} # Yayınlanan sayfanın URL'ini ayarlar
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build # Derleme işinin tamamlanmasını bekler
+    needs: build
     steps:
-      - name: Deploy to GitHub Pages # Artifact'i GitHub Pages'a yayınlar
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
