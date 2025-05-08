@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build: # Derleme işi
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -31,30 +31,30 @@ jobs:
           hugo-version: 'latest'
           extended: true
 
-      # ---- YENİ ADIMLAR BAŞLANGIÇ ----
-      - name: Setup Node.js # Node.js'i kurar
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18' # Projenizin gereksinimlerine göre '20' gibi farklı bir LTS versiyonu da seçebilirsiniz.
+          node-version: '18'
 
-      - name: Install Node.js dependencies # npm bağımlılıklarını kurar
-        # Bu adım, postcss-cli ve tailwindcss gibi araçların package.json dosyanızda
-        # devDependencies altında tanımlı olduğunu varsayar.
-        run: npm ci # 'npm install' yerine 'npm ci' genellikle CI ortamlarında daha hızlı ve güvenilirdir
-      # ---- YENİ ADIMLAR BİTİŞ ----
+      - name: Install Node.js dependencies
+        run: npm ci
 
       - name: Build
         run: hugo --minify
 
+      # ---- BU ADIMI GÜNCELLEYİN ----
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true # Bu satırı ekleyin
+      # ---- GÜNCELLEME BİTİŞ ----
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './public'
           
-  deploy: # Yayınlama işi
+  deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
