@@ -1,0 +1,27 @@
+baseURL = "https://www.civilex.ai/"
+languageCode = 'tr-tr'
+title = 'Civilex.AI'
+theme = 'tailbliss'
+
+[module]
+  [[module.imports]]
+    path = "github.com/nusserstudios/tailbliss"
+    disabled = false
+    ignoreConfig = true  # Add this line to ignore the theme's config
+
+[build]
+  writeStats = true
+[build.buildStats]
+  enable = true
+
+[markup.goldmark.renderer]
+unsafe = true
+ignoreLogs = ['warning-goldmark-raw-html']
+
+# Add this to explicitly set the PostCSS executable
+[module.hugoVersion]
+extended = true
+[security]
+  [security.exec]
+    allow = ['^npx$', '^postcss$', '^go$']
+    osEnv = ['(?i)^((HTTPS?|NO)_PROXY|PATH(EXT)?|APPDATA|TE?MP|TERM|GO\w+|(XDG_CONFIG_)?HOME|USERPROFILE|SSH_AUTH_SOCK|DISPLAY|LANG|SYSTEMDRIVE)$']
