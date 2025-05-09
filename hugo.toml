@@ -25,3 +25,122 @@ extended = true
   [security.exec]
     allow = ['^npx$', '^postcss$', '^go$']
     osEnv = ['(?i)^((HTTPS?|NO)_PROXY|PATH(EXT)?|APPDATA|TE?MP|TERM|GO\w+|(XDG_CONFIG_)?HOME|USERPROFILE|SSH_AUTH_SOCK|DISPLAY|LANG|SYSTEMDRIVE)$']
+
+# Navigation menu
+[menu]
+  [[menu.main]]
+    name = "Ana Sayfa"
+    url = "/"
+    weight = 1
+
+  [[menu.main]]
+    name = "Hakkımızda"
+    url = "/hakkimizda/"
+    weight = 2
+
+  [[menu.main]]
+    name = "İletişim"
+    url = "/iletisim/"
+    weight = 3
+
+  # Footer menu
+  [[menu.footer]]
+    name = "Ana Sayfa"
+    url = "/"
+    weight = 1
+
+  [[menu.footer]]
+    name = "Hakkımızda"
+    url = "/hakkimizda/"
+    weight = 2
+
+  [[menu.footer]]
+    name = "İletişim"
+    url = "/iletisim/"
+    weight = 3
+
+# Site parameters for the home page
+[params]
+  moto = "Yapay Zeka ile Geleceği Şekillendiriyoruz"
+  description = "Türkiye'nin öncü yapay zeka startup'ı. Görüntü işleme ve AI teknolojileri ile işletmenizi dijital geleceğe taşıyoruz."
+  disable_theme_toggle = false
+  disable_stay_uptodate = false
+
+  # Social Media Configuration
+  [params.social_media]
+    [params.social_media.Facebook]
+      enabled = false
+      url = ""
+    
+    [params.social_media.Instagram]
+      enabled = true
+      url = "https://www.instagram.com/civilex.ai/"
+    
+    [params.social_media.Twitter]
+      enabled = false
+      url = ""
+    
+    [params.social_media.Github]
+      enabled = false
+      url = ""
+    
+    [params.social_media.LinkedIn]
+      enabled = true
+      url = "https://www.linkedin.com/company/civilexai/"
+
+  # Hero Section (P1)
+  [params.p1]
+    heading = "Yapay Zeka ve Görüntü İşleme Teknolojileri"
+    image = "images/ai_future.png"
+    [[params.p1.content]]
+      text = "Civilex.AI olarak, işletmelerin dijital dönüşüm yolculuğunda güvenilir teknoloji ortağıyız. Yapay zeka ve bilgisayar görüsü alanındaki uzmanlığımızla, sektörünüze özel yenilikçi çözümler sunuyoruz."
+    [[params.p1.content]]
+      text = "Mobil ve web platformları için geliştirdiğimiz AI destekli uygulamalar ile müşterilerimizin operasyonel verimliliğini artırıyor, rekabet avantajı sağlıyoruz."
+
+  # Second Section (P2)
+  [params.p2]
+    heading = "Neden Civilex.AI?"
+    image = "images/ai_world.png"
+    [[params.p2.content]]
+      text = "Yerel pazar dinamiklerini en iyi bilen uzman ekibimiz, global teknolojileri Türkiye pazarına özel çözümlerle buluşturuyor. Her sektörün kendine özgü ihtiyaçlarını anlıyor ve özelleştirilmiş AI çözümleri sunuyoruz."
+    [[params.p2.content]]
+      text = "Çevik geliştirme metodolojisi ile hızlı teslimat, 7/24 teknik destek ve bakım hizmetleri ile müşterilerimizin yanındayız."
+
+  # Partners/Features Section (P3)
+  [params.p3]
+    heading = "Uzmanlık Alanlarımız"
+    [[params.p3.content]]
+      text = "Derin öğrenme, makine öğrenmesi, doğal dil işleme ve bilgisayar görüsü teknolojilerinde uzmanlaşmış ekibimiz ile sektörünüze değer katıyoruz."
+    
+    [[params.p3.logos]]
+      image = "images/ai_dna.png"
+      alt = "AI Solutions"
+    [[params.p3.logos]]
+      image = "images/ai_whatwedo.png"  
+      alt = "Computer Vision"
+    [[params.p3.logos]]
+      image = "images/ai_man.png"
+      alt = "Mobile Apps"
+    [[params.p3.logos]]
+      image = "images/ai_woman.png"
+      alt = "Web Apps"
+    
+    [[params.p3.links]]
+      text = "Projelerimizi İnceleyin"
+      url = "#"
+
+  # Blog Section (P4)
+  [params.p4]
+    heading = "Blog & Haberler"
+    [[params.p4.content]]
+      text = "Yapay zeka ve teknoloji dünyasındaki son gelişmeleri takip edin."
+
+  # CTA Section (P5)
+  [params.p5]
+    heading = "AI Yolculuğunuza Başlayın"
+    [[params.p5.content]]
+      text = "İşletmenizi geleceğe taşıyacak yapay zeka çözümleri için bugün bizimle iletişime geçin."
+    action = "#"
+    label = "Email address"
+    placeholder = "E-posta adresiniz"
+    button = "İletişime Geç"

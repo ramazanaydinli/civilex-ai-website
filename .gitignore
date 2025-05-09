@@ -9,7 +9,6 @@ hugo_stats.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-package-lock.json 
 
 # Operating System generated files
 .DS_Store
