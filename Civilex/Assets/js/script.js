@@ -1,5 +1,33 @@
+// Lenis Smooth Scroll Implementation
+let lenis;
+
+// Initialize Lenis smooth scrolling
+function initLenis() {
+    lenis = new Lenis({
+        duration: 1.2,        // Scroll animasyon süresi (saniye)
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Easing function
+        orientation: 'vertical', // Scroll yönü
+        gestureOrientation: 'vertical', // Gesture yönü
+        smoothWheel: true,    // Mouse wheel için smooth scroll
+        wheelMultiplier: 1,   // Wheel hızı çarpanı
+        smoothTouch: false,   // Touch cihazlarda smooth scroll (mobil performans için)
+        touchMultiplier: 2,   // Touch hızı çarpanı
+        infinite: false,      // Sonsuz scroll
+    });
+
+    // RequestAnimationFrame ile sürekli güncelleme
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+    
+    requestAnimationFrame(raf);
+}
+
 // Process item'ları header kısmına tıklanabilir yap (title, numara, boşluklar dahil)
 document.addEventListener('DOMContentLoaded', function() {
+    // Lenis'i başlat
+    initLenis();
     // Process Items Functionality
     document.querySelectorAll('.process-header').forEach(header => {
         header.addEventListener('click', function() {
@@ -268,4 +296,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize video click events
     addVideoClickEvents();
+    
+    // Lenis utility functions
+    // Smooth scroll to specific element
+    window.smoothScrollTo = function(target, offset = 0) {
+        if (lenis) {
+            const targetElement = typeof target === 'string' ? document.querySelector(target) : target;
+            if (targetElement) {
+                const targetPosition = targetElement.offsetTop - offset;
+                lenis.scrollTo(targetPosition, {
+                    duration: 1.2,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+                });
+            }
+        }
+    };
+    
+    // Smooth scroll to top
+    window.scrollToTop = function() {
+        if (lenis) {
+            lenis.scrollTo(0, {
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+        }
+    };
+    
+    // Pause/Resume Lenis
+    window.pauseLenis = function() {
+        if (lenis) lenis.stop();
+    };
+    
+    window.resumeLenis = function() {
+        if (lenis) lenis.start();
+    };
 });

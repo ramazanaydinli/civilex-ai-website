@@ -8,9 +8,9 @@
     --accent-color: #61DEF4;
     --text-color: #191A23;
     --text-light: #666;
-    --text-white: #ffffff;
+    --text-white: #fff;
     --background-light: #F3F3F3;
-    --border-color: rgba(0, 0, 0, 1);
+    --border-color: #000;
     
     /* Typography */
     --font-family: 'Space Grotesk', sans-serif;
@@ -36,7 +36,7 @@
     --border-radius-xl: 45px;
     
     /* Shadows */
-    --shadow-sm: 0px 5px rgba(25, 26, 35, 1);
+    --shadow-sm: 0 5px rgba(25, 26, 35, 1);
     --shadow-md: 0 10px 30px rgba(0,0,0,0.1);
     
     /* Transitions */
@@ -51,15 +51,12 @@
 
 /* RESET & BASE STYLES */
 
-* {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-html {
-    margin: 0;
-    padding: 0;
 }
 
 body {
@@ -76,36 +73,31 @@ body {
 p {
     font-weight: var(--font-weight-regular);
     font-size: 18px;
-    line-height: 100%;
-    letter-spacing: 0px;
+    line-height: 1;
 }
 
 h1 {
     font-weight: var(--font-weight-medium);
     font-size: 60px;
-    line-height: 100%;
-    letter-spacing: 0px;
+    line-height: 1;
 }
 
 h2 {
     font-weight: var(--font-weight-medium);
     font-size: 40px;
-    line-height: 100%;
-    letter-spacing: 0px;
+    line-height: 1;
 }
 
 h3 {
     font-weight: var(--font-weight-medium);
     font-size: 30px;
-    line-height: 100%;
-    letter-spacing: 0px;
+    line-height: 1;
 }
 
 h4 {
     font-weight: var(--font-weight-medium);
     font-size: 20px;
-    line-height: 100%;
-    letter-spacing: 0px;
+    line-height: 1;
 }
 
 /* UTILITY CLASSES */
@@ -144,16 +136,13 @@ h4 {
     border-radius: 7px;
     font-family: var(--font-family);
     font-weight: var(--font-weight-medium);
-    font-style: normal;
     font-size: 40px;
-    line-height: 100%;
-    letter-spacing: 0%;
+    line-height: 1;
     white-space: nowrap;
     flex-shrink: 0;
     margin: 0;
     width: fit-content;
     height: fit-content;
-    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -162,10 +151,8 @@ h4 {
 .overview-text p {
     font-family: var(--font-family);
     font-weight: var(--font-weight-regular);
-    font-style: normal;
     font-size: 18px;
-    line-height: 100%;
-    letter-spacing: 0%;
+    line-height: 1;
     color: var(--text-color);
     margin: 0;
     max-width: 1200px;
@@ -282,7 +269,7 @@ nav a.nav-btn {
     font-size: 60px;
     font-weight: var(--font-weight-medium);
     margin-bottom: var(--spacing-lg);
-    line-height: 100%;
+    line-height: 1;
     color: var(--text-color);
 }
 
@@ -414,24 +401,12 @@ nav a.nav-btn {
     width: fit-content;
 }
 
-.project-title-primary {
-    background: var(--secondary-color);
-    font-weight: var(--font-weight-medium);
-    font-size: 30px;
-    line-height: 100%;
-    border-radius: 7px;
-    padding: 7px;
-    gap: 10px;
-    display: block;
-    text-align: left;
-    white-space: nowrap;
-}
-
+.project-title-primary,
 .project-title-secondary {
     background: var(--secondary-color);
     font-weight: var(--font-weight-medium);
     font-size: 30px;
-    line-height: 100%;
+    line-height: 1;
     border-radius: 7px;
     padding: 7px;
     gap: 10px;
@@ -469,10 +444,8 @@ nav a.nav-btn {
 .cta-text {
     color: var(--text-color);
     font-weight: var(--font-weight-regular);
-    font-style: normal;
     font-size: 20px;
     line-height: 28px;
-    letter-spacing: 0%;
 }
 
 .project-logo-container {
@@ -944,7 +917,7 @@ nav a.nav-btn {
 .case-study-card h3 {
     font-size: 30px;
     font-weight: var(--font-weight-medium);
-    line-height: 100%;
+    line-height: 1;
     margin-bottom: 20px;
     color: var(--text-white);
     font-family: var(--font-family);
@@ -953,8 +926,8 @@ nav a.nav-btn {
 .case-study-card p {
     font-size: 16px;
     font-weight: var(--font-weight-regular);
-    line-height: 120%;
-    margin-bottom: 20px;
+    line-height: 1.2;
+    padding-top: 20px;
     width: 100%;
     max-width: 280px;
     color: var(--text-white);
@@ -974,7 +947,7 @@ nav a.nav-btn {
 
 .learn-more-text {
     color: var(--accent-color);
-    line-height: 28px;
+    line-height: 1.4;
     font-size: 20px;
     font-weight: var(--font-weight-regular);
 }
@@ -1261,7 +1234,7 @@ nav a.nav-btn {
     color: var(--text-color);
     margin: 0;
     flex-shrink: 0;
-    transition: color var(--transition-fast) ease;
+    transition: color var(--transition-fast);
 }
 
 .process-item.active .process-number {
@@ -1273,7 +1246,7 @@ nav a.nav-btn {
     font-size: 30px;
     color: var(--text-color);
     margin: 0;
-    transition: color var(--transition-medium) ease;
+    transition: color var(--transition-medium);
     text-align: center;
 }
 
@@ -1292,7 +1265,7 @@ nav a.nav-btn {
     justify-content: center;
     cursor: pointer;
     flex-shrink: 0;
-    transition: all var(--transition-medium) ease;
+    transition: all var(--transition-medium);
     position: relative;
 }
 
@@ -1328,7 +1301,7 @@ nav a.nav-btn {
     left: 3%;
     max-height: 0;
     overflow: hidden;
-    transition: all var(--transition-medium) ease;
+    transition: all var(--transition-medium);
     opacity: 0;
 }
 
@@ -1490,10 +1463,8 @@ nav a.nav-btn {
 
 .team-header h3 {
     font-weight: var(--font-weight-semibold);
-    font-style: normal;
     font-size: 20px;
-    line-height: 28px;
-    letter-spacing: 0%;
+    line-height: 1.4;
     color: var(--text-color);
     margin: 0;
     text-align: left;
@@ -1512,10 +1483,8 @@ nav a.nav-btn {
 
 .team-info h3 {
     font-weight: var(--font-weight-medium);
-    font-style: normal;
     font-size: 20px;
-    line-height: 100%;
-    letter-spacing: 0%;
+    line-height: 1;
     color: var(--text-color);
     margin: 0;
     text-align: left;
@@ -1523,7 +1492,6 @@ nav a.nav-btn {
 
 .team-info .title {
     font-weight: var(--font-weight-regular);
-    font-style: normal;
     font-size: 18px;
     color: var(--text-color);
     margin: 0;
@@ -1542,10 +1510,8 @@ nav a.nav-btn {
 
 .team-card p {
     font-weight: var(--font-weight-regular);
-    font-style: normal;
     font-size: 18px;
     line-height: 1.3;
-    letter-spacing: 0%;
     color: var(--text-color);
     margin: 0;
     position: absolute;
@@ -1890,7 +1856,7 @@ footer {
     text-decoration: underline;
     font-weight: var(--font-weight-regular);
     font-size: 18px;
-    line-height: auto;
+    line-height: 1;
     transition: color var(--transition-fast);
     padding: var(--spacing-xs) 0;
     white-space: nowrap;
@@ -1947,8 +1913,8 @@ footer {
     border-radius: 7px;
     font-weight: var(--font-weight-medium);
     font-size: 18px;
-    padding: 0px 7px;
-    line-height: auto;
+    padding: 0 7px;
+    line-height: 1;
     width: fit-content;
     text-align: left;
 }
@@ -1966,6 +1932,7 @@ footer {
     color: var(--text-color);
     font-size: 18px;
     font-weight: var(--font-weight-regular);
+    line-height: 1;
 }
 
 .footer-center-section {
@@ -2027,7 +1994,7 @@ footer {
     color: var(--text-color);
     font-weight: var(--font-weight-regular);
     font-size: 18px;
-    line-height: 18px;
+    line-height: 1;
     text-align: center;
     position: relative;
 }
@@ -2062,7 +2029,7 @@ footer {
     color: var(--text-color);
     font-weight: var(--font-weight-regular);
     font-size: 18px;
-    line-height: 18px;
+    line-height: 1;
 }
 
 /* Responsive */
@@ -3055,9 +3022,19 @@ footer {
 
 /* Animations & Effects */
 
-/* Smooth scrolling */
+/* Smooth scrolling with Lenis */
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto; /* Lenis ile smooth scroll için auto olarak bırakıyoruz */
+}
+
+/* Lenis smooth scroll için body optimizasyonu */
+body {
+    overflow-x: hidden; /* Yatay scroll'u engelle */
+}
+
+/* Smooth scroll için tüm elementler */
+* {
+    scroll-behavior: auto;
 }
 
 /* Keyframe animations */
@@ -3118,16 +3095,3 @@ html {
     }
 }
 
-/* Accessibility */
-
-/* Respect user's motion preferences */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-}
