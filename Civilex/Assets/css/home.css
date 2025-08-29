@@ -166,7 +166,6 @@ h4 {
 .hero {
     background: var(--text-white);
     padding: 0;
-    margin-top: -30px;
     position: relative;
     overflow: hidden;
     min-height: 600px;
@@ -176,6 +175,7 @@ h4 {
     background: var(--text-white);
     padding: var(--spacing-sm) 0;
     position: relative;
+    margin-top: -30px;
     width: 100%;
 }
 
