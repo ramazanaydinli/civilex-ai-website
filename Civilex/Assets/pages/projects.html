@@ -42,7 +42,25 @@
                 <div class="logo">
                     <img src="../images/CivilexLogo.png" alt="Civilex Logo" loading="lazy">
                 </div>
-                <nav>
+                <nav class="desktop-nav">
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="projects.html"  class="nav-btn active">Projects</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="blog.html" class="blog-btn-main">Blog</a></li>
+                    </ul>
+                </nav>
+                
+                <!-- Mobile Menu Button -->
+                <div class="mobile-menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
+                <!-- Mobile Navigation Menu -->
+                <nav class="mobile-nav">
                     <ul>
                         <li><a href="home.html">Home</a></li>
                         <li><a href="about.html">About Us</a></li>
@@ -57,19 +75,129 @@
 
     <!-- Main Content -->
     <main>
-        <!-- Coming Soon Section -->
-        <section class="coming-soon-section">
+        <!-- Where Research Meets Reality Section -->
+        <section class="research-reality-section">
             <div class="container">
-                <div class="coming-soon-content">
-                    <div class="coming-soon-logo">
-                        <img src="../images/CivilexLogo.png" alt="Civilex.AI Logo">
+                <div class="research-reality-content">
+                    <div class="research-illustration">
+                        <img src="../images/Illustration1.png" alt="Research Meets Reality Illustration">
                     </div>
-                    <h1 class="coming-soon-title">Coming Soon...</h1>
-                    <p class="coming-soon-description">
-                        This page will be ready soon to examine our projects in detail.
-                        For now, you can review the project examples on our main page.
-                    </p>
-                    <a href="home.html" class="coming-soon-btn">Back to Main Page</a>
+                    <div class="research-text">
+                        <h1>Where Research Meets Reality</h1>
+                        <p>Explore our university collaboration with Applied Biomechanics – the cutting-edge software our team has been developing. Our mission is to bring innovative solutions to real-world problems, one step and one person at a time.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRAItes Section -->
+        <section class="praits-section">
+            <div class="container">
+                <div class="praits-content">
+                    <div class="praits-header">
+                        <h2>PRAItes</h2>
+                        <p>PRAItes is an AI-powered mobile app developed by Civilex, designed to enhance recovery and performance in sports using computer vision to track your motion and provide feedback – helping you move better and live healthier.</p>
+                    </div>
+                    <div class="praits-main">
+                        <div class="praits-phone">
+                            <img src="../images/Phone.png" alt="PRAItes App on Phone">
+                        </div>
+                        <div class="praits-features">
+                            <div class="feature-card dark">
+                                <h3>AI-Powered Motion & Posture Correction</h3>
+                                <p>Real-time movement analysis, feedback on posture and form, and injury prevention.</p>
+                            </div>
+                            <div class="feature-card blue">
+                                <h3>Truly Personalized Workout Programs</h3>
+                                <p>Customized workout programs tailored to individual needs, goals, and progress, adapting as the user gets stronger.</p>
+                            </div>
+                            <div class="feature-card dark">
+                                <h3>Uncompromising On-Device Privacy</h3>
+                                <p>All motion analysis happens directly on the user's device, ensuring data privacy and security.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Your Pocket Physiotherapist Section -->
+        <section class="physiotherapist-section">
+            <div class="container">
+                <div class="physiotherapist-content">
+                    <div class="physiotherapist-header">
+                        <h2>Your Pocket Physiotherapist</h2>
+                        <p>The Physiotherapy Clinic of Civilex is an AI-powered remote, clinician-supervised service that helps you recover from injuries, manage chronic pain, and improve your physical function from the comfort of your home. Our innovative approach combines cutting-edge AI technology with expert human oversight, ensuring you receive the best possible care, anytime, anywhere.</p>
+                    </div>
+                    <div class="physiotherapist-main">
+                        <div class="physiotherapist-illustration">
+                            <img src="../images/Illustration2.png" alt="Physiotherapist Illustration">
+                        </div>
+                        <div class="physiotherapist-features">
+                            <div class="feature-card dark">
+                                <h3>AI-Powered Motion Tracking & Guidance</h3>
+                                <p>AI system's ability to track movements, identify deviations, and provide real-time audio/visual feedback for optimal technique.</p>
+                            </div>
+                            <div class="feature-card light">
+                                <h3>Adaptive Exercise Personalization</h3>
+                                <p>AI continuously learns and adapts exercise programs based on user progress, adjusting intensity or suggesting alternatives.</p>
+                            </div>
+                            <div class="feature-card blue">
+                                <h3>Seamless & Automated Reporting</h3>
+                                <p>Automatic generation of detailed progress reports for clinicians, streamlining communication and program adjustments.</p>
+                            </div>
+                            <div class="feature-card light">
+                                <h3>Uncompromising On-Device Privacy</h3>
+                                <p>All motion analysis and data processing occur on-device for maximum security and user control.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI-Powered Harness Detection Section -->
+        <section class="harness-detection-section">
+            <div class="container">
+                <div class="harness-detection-content">
+                    <div class="harness-detection-header">
+                        <h2>AI-Powered Harness Detection</h2>
+                        <p>Our AI-powered harness monitoring system by Civilex AI provides real-time safety and fall detection for individuals using harnesses in various environments. This innovative solution uses computer vision and machine learning to identify and alert potential safety hazards, ensuring immediate intervention and preventing accidents, making workplaces and homes safer.</p>
+                        <div class="watch-video">
+                            <i class="fas fa-play"></i>
+                            <span>Watch the video</span>
+                        </div>
+                    </div>
+                    <div class="harness-detection-features">
+                        <div class="feature-card dark">
+                            <div class="feature-icon">
+                                <img src="../images/Illustration3.png" alt="Real-time Monitoring">
+                            </div>
+                            <h3>Real-time Monitoring 24/7</h3>
+                            <p>Continuous monitoring for hazards and immediate alerts.</p>
+                        </div>
+                        <div class="feature-card light">
+                            <div class="feature-icon">
+                                <img src="../images/Illustration4.png" alt="Instant Alert">
+                            </div>
+                            <h3>Instant Alert and Detection</h3>
+                            <p>Instant detection of falls or improper harness use and rapid response.</p>
+                        </div>
+                        <div class="feature-card blue">
+                            <div class="feature-icon">
+                                <img src="../images/Illustration1.png" alt="Customizable Settings">
+                            </div>
+                            <h3>Customizable Alert Settings</h3>
+                            <p>Customizable alert sensitivity, notifications, and emergency contacts.</p>
+                        </div>
+                        <div class="feature-card light">
+                            <div class="feature-icon">
+                                <img src="../images/Illustration2.png" alt="Safety Shield">
+                            </div>
+                            <h3>Prevent Accidents, Reduce Risk</h3>
+                            <p>Real-time insights and proactive alerts reduce accident risk and enhance safety.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
