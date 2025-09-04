@@ -75,6 +75,10 @@ body {
     padding: 0 var(--container-padding);
 }
 
+.section {
+    padding: var(--spacing-xxl) 0;
+}
+
 /* HERO SECTION */
 .hero {
     background: var(--text-white);

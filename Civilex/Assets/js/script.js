@@ -24,42 +24,6 @@ function initLenis() {
     requestAnimationFrame(raf);
 }
 
-// Page load scroll to top
-window.addEventListener('load', function() {
-    // Scroll to top when page is loaded
-    window.scrollTo(0, 0);
-});
-
-// Also scroll to top when page is refreshed
-window.addEventListener('beforeunload', function() {
-    // Scroll to top before page refresh
-    window.scrollTo(0, 0);
-});
-
-// Force scroll to top on page refresh
-if (window.performance && window.performance.navigation && window.performance.navigation.type === 1) {
-    // Page was refreshed, scroll to top
-    window.scrollTo(0, 0);
-}
-
-// Additional method - check if page was refreshed
-let isPageRefreshed = false;
-
-// Check if page was refreshed using sessionStorage
-if (sessionStorage.getItem('pageRefreshed') === 'true') {
-    isPageRefreshed = true;
-    sessionStorage.removeItem('pageRefreshed');
-}
-
-// If page was refreshed, scroll to top
-if (isPageRefreshed) {
-    window.scrollTo(0, 0);
-}
-
-// Set flag when page is about to refresh
-window.addEventListener('beforeunload', function() {
-    sessionStorage.setItem('pageRefreshed', 'true');
-});
 
 // DOM Content Loaded event
 document.addEventListener('DOMContentLoaded', function() {

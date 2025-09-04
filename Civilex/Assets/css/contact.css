@@ -176,8 +176,7 @@ nav a.nav-btn {
 .mobile-nav {
     display: none !important;
 }
-    transition: all var(--transition-fast);
-}
+    
 
 .blog-btn-main {
     background: var(--text-white);
