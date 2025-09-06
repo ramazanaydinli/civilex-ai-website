@@ -210,18 +210,37 @@ nav a.nav-btn {
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-xxl);
     align-items: center;
+    justify-items: center;
     height: 650px;
     border-radius: var(--border-radius-xl);
 }
 
 .research-illustration {
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    grid-column: 1;
+    grid-row: 1;
 }
 
 .research-illustration img {
     max-width: 500px;
     max-height: 500px;
     height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.research-text {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 .research-text h1 {
@@ -347,6 +366,14 @@ nav a.nav-btn {
     border-radius: var(--border-radius-xl);
     margin-bottom: var(--spacing-md);
     margin-left: auto;
+}
+
+.feature-card-desktop {
+    display: block;
+}
+
+.feature-card-mobile {
+    display: none;
 }
 
 .feature-card h3 {
@@ -1048,6 +1075,201 @@ footer {
         box-shadow: 0 6px 20px rgba(63, 115, 216, 0.4);
     }
     
+    /* RESEARCH REALITY SECTION - Mobile */
+    .research-reality-content {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-lg);
+        height: auto;
+        padding: var(--spacing-lg);
+        text-align: center;
+    }
+    
+    .research-illustration {
+        order: 1;
+        margin-bottom: var(--spacing-md);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 60px;
+    }
+    
+    .research-illustration img {
+        max-width: 280px;
+        max-height: 280px;
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+    
+    .research-text {
+        order: 2;
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .research-text h1 {
+        font-size: var(--font-size-2xl);
+        margin-bottom: var(--spacing-md);
+        line-height: var(--line-height-tight);
+    }
+    
+    .research-text p {
+        width: 100%;
+        font-size: var(--font-size-base);
+        line-height: var(--line-height-relaxed);
+        margin-bottom: 0;
+        max-width: none;
+    }
+    
+    /* OVERVIEW SECTION - Mobile */
+    .overview-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .overview-header h2 {
+        font-size: 23px;
+        padding: 5px;
+    }
+    
+    .overview-text p {
+        font-size: var(--font-size-sm);
+        line-height: var(--line-height-relaxed);
+        max-width: 100%;
+    }
+    
+    /* PILATES SECTION - Mobile */
+    .pilates-main {
+        flex-direction: column;
+        margin-top: var(--spacing-xl);
+        gap: var(--spacing-lg);
+        align-items: center;
+    }
+    
+    .pilates-phone {
+        margin-left: 0;
+        margin-bottom: var(--spacing-md);
+        order: 1;
+    }
+    
+    .pilates-phone img {
+        width: 280px;
+        height: auto;
+        max-height: 400px;
+    }
+    
+    .pilates-features {
+        order: 2;
+        width: 100%;
+        margin-left: 0;
+        align-items: center;
+    }
+    
+    .feature-card {
+        width: 100%;
+        height: auto;
+        min-height: 200px;
+        padding: var(--spacing-lg);
+        margin-left: 0;
+    }
+
+    .feature-card-desktop {
+        display: none;
+    }
+
+    .feature-card-mobile {
+        display:flex;
+        flex-direction: column;
+    }
+    
+    .feature-card h3 {
+        font-size: var(--font-size-lg);
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+    
+    .feature-card p {
+        font-size: var(--font-size-md);
+        line-height: var(--line-height-relaxed);
+        text-align: left;
+    }
+    
+    /* PHYSIOTHERAPIST SECTION - Mobile */
+    .physiotherapist-content {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-lg);
+    }
+    
+    .physiotherapist-illustration {
+        order: 1;
+        margin-top: 0;
+    }
+    
+    .physiotherapist-illustration img {
+        max-width: 100%;
+        max-height: 300px;
+        width: 100%;
+        height: auto;
+    }
+    
+    .physiotherapist-features {
+        order: 2;
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
+        margin-top: 0;
+        grid-template-columns: 1fr;
+    }
+    
+    /* HARNESS DETECTION SECTION - Mobile */
+    .harness-detection-features {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-lg);
+        grid-template-columns: 1fr;
+    }
+    
+    .harness-detection-features .feature-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: var(--spacing-lg);
+    }
+    
+    .feature-content {
+        order: 1;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .feature-icon {
+        order: 2;
+        margin-left: 0;
+        margin-bottom: 0;
+    }
+    
+    .feature-icon img {
+        max-width: 200px;
+        height: auto;
+    }
+    
+    .feature-card-title-primary,
+    .feature-card-title-secondary {
+        font-size: var(--font-size-lg);
+    }
+    
+    .watch-video-link {
+        font-size: var(--font-size-base);
+        margin-top: var(--spacing-sm);
+    }
+    
+    .video-icon {
+        width: 35px;
+        height: 35px;
+    }
+
     /* FOOTER Section - Mobile */
     .footer-content {
         flex-direction: column;
