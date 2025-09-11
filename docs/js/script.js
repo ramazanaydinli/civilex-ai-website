@@ -339,6 +339,55 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize video click events
     addVideoClickEvents();
     
+    // Phone Carousel Functionality
+    function initPhoneCarousel() {
+        const slides = document.querySelectorAll('.phone-slide');
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+        let autoPlayInterval;
+        const autoPlayDelay = 6000; // 6 saniye
+
+        // Auto-play functionality
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updatePhoneCarousel();
+            }, autoPlayDelay);
+        }
+
+        function stopAutoPlay() {
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+            }
+        }
+
+        function resetAutoPlay() {
+            stopAutoPlay();
+            startAutoPlay();
+        }
+
+        // Update carousel state
+        function updatePhoneCarousel() {
+            // Update slides with smooth transition
+            slides.forEach((slide, index) => {
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+        }
+
+        // Start auto-play
+        startAutoPlay();
+        
+        // Initialize first slide
+        updatePhoneCarousel();
+    }
+
+    // Initialize phone carousel
+    initPhoneCarousel();
+    
     // Lenis utility functions
     // Smooth scroll to specific element
     window.smoothScrollTo = function(target, offset = 0) {

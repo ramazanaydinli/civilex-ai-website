@@ -326,16 +326,6 @@ nav a.nav-btn {
     padding: 20px;
 }
 
-/* Keyframe animations */
-@keyframes float {
-    0%, 100% {
-        transform: translateY(-10px) translateY(10px);
-    }
-    50% {
-        transform: translateY(-20px) translateY(10px);
-    }
-}
-
 .phone-container {
     position: relative;
     display: inline-block;
@@ -343,7 +333,6 @@ nav a.nav-btn {
     width: 100%;
     max-width: 502px;
     height: 600px;
-    transform: translateY(-10px) translateY(10px);
     animation: float 3s ease-in-out infinite;
 }
 
@@ -362,6 +351,120 @@ nav a.nav-btn {
     height: 100%;
     object-fit: contain;
     transform: translateZ(10px);
+    z-index: 1;
+}
+
+/* Phone Screen Carousel */
+.phone-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 92.7%;
+    z-index: 3;
+    overflow: hidden;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.phone-carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.phone-slide {
+    position: absolute;
+    
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.phone-slide.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.phone-slide img {
+    width: 51.2%;
+    height: 100%;
+    border-radius: 25px;
+    object-position: center;
+    background-color: white;
+}
+
+/* Phone Carousel Indicators */
+.phone-carousel-indicators {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 5;
+}
+
+.phone-carousel-indicators .indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.phone-carousel-indicators .indicator.active {
+    background: var(--accent-color);
+    transform: scale(1.2);
+}
+
+.phone-carousel-indicators .indicator:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transform: scale(1.1);
+}
+
+/* Phone Carousel Pagination */
+.phone-carousel-pagination {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 6;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 12px;
+    padding: 6px 12px;
+    backdrop-filter: blur(10px);
+}
+
+.phone-carousel-pagination .pagination-text {
+    color: var(--text-white);
+    font-size: 12px;
+    font-weight: var(--font-weight-medium);
+    font-family: var(--font-family);
+    letter-spacing: 0.5px;
+}
+
+.phone-carousel-pagination .current-slide {
+    color: var(--accent-color);
+    font-weight: var(--font-weight-semibold);
+}
+
+.phone-carousel-pagination .total-slides {
+    color: rgba(255, 255, 255, 0.8);
 }
 
 /* PROJECTS SECTION */
@@ -2536,6 +2639,38 @@ footer {
     .phone-container {
         max-width: 250px;
         height: 300px;
+    }
+    
+    .phone-screen {
+        width: 100%;
+        height: 92.7%;
+    }
+    
+    .phone-slide img {
+        width: 51.2%;
+        height: 100%;
+        border-radius: 10px;
+        background-color: white;
+    }
+    
+    .phone-carousel-indicators {
+        bottom: 10px;
+        gap: 6px;
+    }
+    
+    .phone-carousel-indicators .indicator {
+        width: 6px;
+        height: 6px;
+    }
+    
+    .phone-carousel-pagination {
+        top: 10px;
+        right: 10px;
+        padding: 4px 8px;
+    }
+    
+    .phone-carousel-pagination .pagination-text {
+        font-size: 10px;
     }
     
     /* OVERVIEW */
