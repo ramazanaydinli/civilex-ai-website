@@ -1024,7 +1024,6 @@ footer {
      
     .form-option {
         width: fit-content;
-        border: 1px solid var(--border-color);
         padding: var(--spacing-xxs);    
         text-align: left;
         display: flex;
