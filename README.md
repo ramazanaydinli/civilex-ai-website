@@ -1,92 +1,71 @@
-# Civilex.AI - AI R&D in Action
+# PilatesAI Web - Frontend Website
 
-Bu proje, Civilex.AI'nin AI araştırma ve geliştirme projelerini tanıtan bir web sitesidir. Özellikle PilAItes adlı bilgisayar görüşü destekli Pilates antrenörü uygulamasına odaklanmaktadır.
+Bu proje, PilatesAI web sitesinin frontend kısmıdır. Modern ve responsive tasarım ile kullanıcı dostu bir deneyim sunar.
 
-## 🚀 Proje Özellikleri
+## 🚀 Kurulum
 
-- **PilAItes**: Bilgisayar görüşü ile gerçek zamanlı Pilates antrenmanı
-- **AI-Powered Harness Detection**: Yüksek binalarda güvenlik kontrolü
-- **Your Pocket Physiotherapist**: Uzaktan fizyoterapi hizmeti
-- **On-Device Privacy**: Tüm AI işlemleri cihazda gerçekleşir
+### 1. Projeyi İndirin
+```bash
+git clone [repository-url]
+cd PilatesAIWeb
+```
 
-## 🌐 GitHub Pages ile Yayınlama
+### 2. Live Server ile Çalıştırın
+```bash
+# Cursor Live Server kullanın veya
+# docs/config/package.json'daki script'leri kullanın
+npm run dev
+```
 
-Bu proje GitHub Pages kullanılarak yayınlanmıştır. Site şu adreste erişilebilir:
+## 🎯 Özellikler
 
-**🔗 [https://yourusername.github.io/PilatesAIWeb](https://yourusername.github.io/PilatesAIWeb)**
+- ✅ Responsive tasarım (Desktop, Tablet, Mobile)
+- ✅ Modern CSS ve JavaScript
+- ✅ Smooth scrolling (Lenis)
+- ✅ Interactive form elements
+- ✅ Contact form (simulation)
+- ✅ Team member pagination
+- ✅ Case studies carousel
+- ✅ Video integration
+- ✅ Mobile-friendly navigation
+
+## 📱 Sayfalar
+
+- **Home** (`docs/index.html`) - Ana sayfa
+- **About** (`docs/about.html`) - Hakkımızda
+- **Projects** (`docs/projects.html`) - Projeler
+- **Contact** (`docs/contact.html`) - İletişim
+- **Blog** (`docs/blog.html`) - Blog
+
+## 🔧 Teknik Detaylar
+
+- **Frontend**: Vanilla HTML, CSS, JavaScript
+- **CSS Framework**: Custom CSS with CSS Variables
+- **JavaScript Libraries**: Lenis (smooth scroll)
+- **Icons**: Font Awesome
+- **Fonts**: Space Grotesk (Google Fonts)
+- **Images**: Optimized PNG/WebP formats
 
 ## 📁 Proje Yapısı
 
 ```
-PilatesAIWeb/
-├── index.html                 # Ana sayfa (GitHub Pages için)
-├── Civilex/
-│   └── Assets/
-│       ├── css/               # Stil dosyaları
-│       ├── js/                 # JavaScript dosyaları
-│       ├── images/            # Resim dosyaları
-│       ├── pages/             # Diğer sayfalar
-│       ├── icons/             # İkon dosyaları
-│       └── videos/            # Video dosyaları
-└── README.md                  # Bu dosya
+docs/
+├── css/           # Stylesheet dosyaları
+├── js/            # JavaScript dosyaları
+├── images/        # Görsel dosyalar
+├── icons/         # İkon dosyaları
+├── team/          # Takım üyesi fotoğrafları
+└── *.html         # HTML sayfaları
 ```
 
-## 🛠️ Teknolojiler
+## 🎨 Tasarım Özellikleri
 
-- **HTML5**: Modern web standartları
-- **CSS3**: Responsive tasarım ve animasyonlar
-- **JavaScript**: Etkileşimli özellikler
-- **Font Awesome**: İkonlar
-- **Google Fonts**: Space Grotesk font ailesi
-- **Lenis**: Smooth scroll kütüphanesi
-
-## 📱 Responsive Tasarım
-
-Site tüm cihazlarda mükemmel görünüm sağlar:
-- Desktop (1200px+)
-- Tablet (768px - 1199px)
-- Mobile (767px ve altı)
-
-## 🚀 Kurulum ve Çalıştırma
-
-1. Projeyi klonlayın:
-```bash
-git clone https://github.com/yourusername/PilatesAIWeb.git
-```
-
-2. Proje klasörüne gidin:
-```bash
-cd PilatesAIWeb
-```
-
-3. `index.html` dosyasını tarayıcınızda açın veya GitHub Pages'i etkinleştirin.
-
-## 📄 Sayfalar
-
-- **Ana Sayfa** (`index.html`): Proje tanıtımı ve özellikler
-- **About Us** (`Civilex/Assets/pages/about.html`): Şirket hakkında
-- **Projects** (`Civilex/Assets/pages/projects.html`): Proje detayları
-- **Contact** (`Civilex/Assets/pages/contact.html`): İletişim bilgileri
-- **Blog** (`Civilex/Assets/pages/blog.html`): Blog yazıları
-
-## 🤝 Katkıda Bulunma
-
-1. Bu repository'yi fork edin
-2. Yeni bir branch oluşturun (`git checkout -b feature/amazing-feature`)
-3. Değişikliklerinizi commit edin (`git commit -m 'Add some amazing feature'`)
-4. Branch'inizi push edin (`git push origin feature/amazing-feature`)
-5. Bir Pull Request oluşturun
+- **Color Scheme**: Mavi tonları (#3F73D8, #191A23)
+- **Typography**: Space Grotesk font family
+- **Layout**: CSS Grid ve Flexbox
+- **Animations**: CSS transitions ve transforms
+- **Responsive**: Mobile-first approach
 
 ## 📞 İletişim
 
-- **Email**: info@civilex.ai
-- **Phone**: +90 544 247 49 20
-- **Website**: [civilex.ai](https://civilex.ai)
-
-## 📝 Lisans
-
-Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için `LICENSE` dosyasına bakın.
-
----
-
-© 2025 Civilex.AI. Tüm hakları saklıdır.
+Herhangi bir sorun yaşarsanız, lütfen iletişime geçin.

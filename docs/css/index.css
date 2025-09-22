@@ -1989,14 +1989,23 @@ footer {
 }
 
 .contact-info {
-    
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: var(--spacing-md);
     align-items: flex-start;
     text-align: left;
-    width: 100%;
-    padding-left: 90px;
+    width: 500px;
+}
+
+.contact-info span {
+    color: var(--text-color);
+    font-size: 18px;
+    font-weight: var(--font-weight-regular);
+    line-height: 1;
+}
+
+.contact-info :nth-child(3) {
+    font-size: 17.4px;
 }
 
 .contact-highlight {
@@ -2018,13 +2027,6 @@ footer {
     align-items: center;
     text-align: center;
     justify-content: flex-start;
-}
-
-.contact-details span {
-    color: var(--text-color);
-    font-size: 18px;
-    font-weight: var(--font-weight-regular);
-    line-height: 1;
 }
 
 .footer-center-section {

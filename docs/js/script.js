@@ -90,14 +90,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Pagination Functionality
+    // Pagination Functionality (sadece team sayfasında çalışır)
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
     const paginationDots = document.querySelectorAll('.pagination-dot');
-    let currentPage = 1;
-    const totalPages = 2; // Toplam sayfa sayısı
-    let autoPlayInterval;
-    const autoPlayDelay = 5000; // 5 saniye
+    
+    // Pagination sadece team sayfasında varsa çalıştır
+    if (prevBtn && nextBtn && paginationDots.length > 0) {
+        let currentPage = 1;
+        const totalPages = 2; // Toplam sayfa sayısı
+        let autoPlayInterval;
+        const autoPlayDelay = 5000; // 5 saniye
 
     // Auto-play functionality
     function startAutoPlay() {
@@ -196,10 +199,15 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(`Current page: ${currentPage}`);
     }
     
-    // Case Studies Pagination Functionality
+    } // Pagination if bloğu kapanışı
+    
+    // Case Studies Pagination Functionality (sadece projects sayfasında çalışır)
     const casePaginationDots = document.querySelectorAll('.case-pagination-dot');
-    let currentCasePage = 1;
-    const totalCasePages = 3;
+    
+    // Case Studies pagination sadece projects sayfasında varsa çalıştır
+    if (casePaginationDots.length > 0) {
+        let currentCasePage = 1;
+        const totalCasePages = 3;
 
 
 
@@ -300,15 +308,17 @@ document.addEventListener('DOMContentLoaded', function() {
         addDotClickEvents();
     }
 
-    // Initialize case studies first page display
-    updateCasePagination();
-    addDotClickEvents();
-    addArrowClickEvents();
+        // Initialize case studies first page display
+        updateCasePagination();
+        addDotClickEvents();
+        addArrowClickEvents();
+    } // Case Studies pagination if bloğu kapanışı
     
-    // Video click events - play/pause functionality
+    // Video click events - play/pause functionality (sadece projects sayfasında çalışır)
     function addVideoClickEvents() {
         const allVideos = document.querySelectorAll('.case-study-video video');
-        allVideos.forEach(video => {
+        if (allVideos.length > 0) {
+            allVideos.forEach(video => {
             const videoContainer = video.closest('.case-study-video');
             
             video.addEventListener('click', function() {
@@ -333,19 +343,21 @@ document.addEventListener('DOMContentLoaded', function() {
             video.addEventListener('ended', function() {
                 videoContainer.classList.remove('playing');
             });
-        });
+            });
+        }
     }
 
     // Initialize video click events
     addVideoClickEvents();
     
-    // Phone Carousel Functionality
+    // Phone Carousel Functionality (sadece home sayfasında çalışır)
     function initPhoneCarousel() {
         const slides = document.querySelectorAll('.phone-slide');
-        let currentSlide = 0;
-        const totalSlides = slides.length;
-        let autoPlayInterval;
-        const autoPlayDelay = 6000; // 6 saniye
+        if (slides.length > 0) {
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+            let autoPlayInterval;
+            const autoPlayDelay = 6000; // 6 saniye
 
         // Auto-play functionality
         function startAutoPlay() {
@@ -378,15 +390,188 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Start auto-play
-        startAutoPlay();
-        
-        // Initialize first slide
-        updatePhoneCarousel();
+            // Start auto-play
+            startAutoPlay();
+            
+            // Initialize first slide
+            updatePhoneCarousel();
+        }
     }
 
     // Initialize phone carousel
     initPhoneCarousel();
+    
+
+    
+    // Contact Form Functionality
+    function initContactForm() {
+        const radioButtons = document.querySelectorAll('input[name="contact-type"]');
+        const contactForm = document.getElementById('contactForm');
+        
+        // Radio button change event
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.checked) {
+                    console.log('Radio button changed to:', this.value);
+                    updateFormForOption(this.value);
+                }
+            });
+        });
+        
+        // Form submission
+        if (contactForm) {
+            console.log('✅ Contact form found and event listener added');
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                console.log('📝 Form submit event triggered');
+                
+                // Get form data
+                const formData = new FormData(this);
+                const fullName = formData.get('fullName');
+                const email = formData.get('email');
+                const message = formData.get('message');
+                const contactType = formData.get('contact-type');
+                
+                console.log('📋 Form data collected:', {
+                    fullName,
+                    email,
+                    message: message?.substring(0, 50) + '...',
+                    contactType
+                });
+                
+                // Basic validation
+                if (!fullName || !email || !message) {
+                    showNotification('Lütfen tüm alanları doldurun.', 'error');
+                    return;
+                }
+                
+                if (!isValidEmail(email)) {
+                    showNotification('Lütfen geçerli bir e-posta adresi girin.', 'error');
+                    return;
+                }
+                
+                // Show loading state
+                const submitBtn = this.querySelector('.submit-btn');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Gönderiliyor...';
+                submitBtn.disabled = true;
+                
+                // Simulate form submission (no backend)
+                console.log('📝 Form submitted successfully (simulation)');
+                showNotification('Mesajınız alındı! En kısa sürede size dönüş yapacağız.', 'success');
+                
+                // Reset form
+                this.reset();
+                
+                // Reset to first option
+                const firstRadio = document.getElementById('say-hi');
+                if (firstRadio) {
+                    firstRadio.checked = true;
+                    // Remove active class from all options
+                    document.querySelectorAll('.form-option').forEach(option => {
+                        option.classList.remove('active');
+                    });
+                    // Add active class to first option
+                    firstRadio.closest('.form-option').classList.add('active');
+                    updateFormForOption('say-hi');
+                }
+                
+                // Reset button state
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
+        }
+    }
+    
+    // Update form based on selected option
+    function updateFormForOption(option) {
+        const messageTextarea = document.getElementById('message');
+        
+        switch(option) {
+            case 'say-hi':
+                messageTextarea.placeholder = 'Write your message';
+                break;
+            case 'join-team':
+                messageTextarea.placeholder = 'Tell us about yourself and why you want to join our team';
+                break;
+            case 'about-projects':
+                messageTextarea.placeholder = 'Tell us about what do you want to know';
+                break;
+        }
+    }
+    
+    // Email validation
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
+    // Notification system
+    function showNotification(message, type = 'info') {
+        // Remove existing notifications
+        const existingNotification = document.querySelector('.notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+        
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.textContent = message;
+        
+        // Add styles
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        `;
+        
+        // Set background color based on type
+        switch(type) {
+            case 'success':
+                notification.style.backgroundColor = '#4CAF50';
+                break;
+            case 'error':
+                notification.style.backgroundColor = '#f44336';
+                break;
+            case 'warning':
+                notification.style.backgroundColor = '#ff9800';
+                break;
+            default:
+                notification.style.backgroundColor = '#2196F3';
+        }
+        
+        // Add to DOM
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 300);
+        }, 5000);
+    }
+    
+    // Initialize contact form
+    console.log('🔧 Initializing contact form...');
+    initContactForm();
     
     // Lenis utility functions
     // Smooth scroll to specific element
