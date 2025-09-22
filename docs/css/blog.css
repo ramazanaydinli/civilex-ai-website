@@ -858,10 +858,18 @@ footer {
         margin-top: var(--spacing-lg);
     }
     
+    .contact-info span {
+        font-size: var(--font-size-base);
+    }
+    
+    .contact-info :nth-child(3) {
+        font-size: var(--font-size-base);
+    }
+    
     .contact-highlight {
         font-size: 16px;
         padding: 0 var(--spacing-xs);
-        margin-bottom: var(--spacing-sm);
+        margin-bottom: var(--spacing-xxs);
     }
     
     .contact-details {
@@ -870,10 +878,6 @@ footer {
         align-items: center;
         text-align: center;
         justify-content: center;
-    }
-    
-    .contact-details span {
-        font-size: 16px;
     }
     
     .footer-right-section {
