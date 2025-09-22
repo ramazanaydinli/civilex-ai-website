@@ -68,4 +68,4 @@ docs/
 
 ## 📞 İletişim
 
-Herhangi bir sorun yaşarsanız, lütfen iletişime geçin.
+Herhangi bir sorun yaşarsanız, lütfen iletişime geçin. 
