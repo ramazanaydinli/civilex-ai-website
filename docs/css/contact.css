@@ -74,17 +74,6 @@
     box-sizing: border-box;
 }
 
-/* Cross-browser text sizing and font smoothing */
-html {
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-}
-
-body, button, input, textarea {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
 body {
     font-family: var(--font-family);
     line-height: var(--line-height-loose);
@@ -92,11 +81,6 @@ body {
     background-color: var(--text-white);
     margin-top: var(--spacing-xl);
     padding: 0;
-}
-
-/* Media rendering hints */
-img {
-    image-rendering: -webkit-optimize-contrast;
 }
 
 /* UTILITY CLASSES */
@@ -269,7 +253,6 @@ nav a.nav-btn {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    min-width: 0; /* Firefox overflow fix for flex/grid children */
 }
 
 .contact-hero-text h1 {
@@ -301,7 +284,6 @@ nav a.nav-btn {
     max-width: 1350px;
     margin: 0;
     justify-content: flex-start;
-    flex-wrap: wrap; /* Dar genişliklerde sarmalama (Firefox uyumu) */
 }
 
 .overview-header h2 {
@@ -334,15 +316,6 @@ nav a.nav-btn {
     text-align: left;
     white-space: normal;
     text-overflow: ellipsis;
-}
-
-/* Genel overflow/taşma korumaları (Firefox uyumluluğu) */
-.overview-content,
-.overview-text,
-.contact-form-container,
-.form-content,
-.footer-content {
-    min-width: 0;
 }
 
 /* CONTACT FORM SECTION */
@@ -463,26 +436,6 @@ nav a.nav-btn {
     max-width: 560px;   
 }
 
-/* Form elements cross-browser appearance */
-input, textarea, button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-/* Better tap behavior on touch devices */
-button, .submit-btn {
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-}
-
-/* Buton görünüm reseti - cross browser */
-.submit-btn {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
@@ -514,26 +467,10 @@ button, .submit-btn {
     width: 560px;
 }
 
-/* Esnek genişlik: form içindeki submit butonu akışkan */
-.contact-form .submit-btn {
-    width: 100%;
-    max-width: 560px;
-}
-
 .g-recaptcha:hover {
     background: #2c5bb8;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(63, 115, 216, 0.3);
-}
-
-/* Reduce motion for users who prefer less animation */
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation-duration: 0.001ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.001ms !important;
-        scroll-behavior: auto !important;
-    }
 }
 
 /* Form Decoration */
