@@ -459,7 +459,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Send to backend API
         try {
-            const response = await fetch('https://civilex-ai.onrender.com', {
+            const response = await fetch('https://civilex-ai.onrender.com/api/contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
