@@ -2008,6 +2008,22 @@ footer {
     font-size: 17.4px;
 }
 
+.address-link {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.address-link:hover {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.address-link:active {
+    color: var(--primary-color);
+}
+
 .contact-highlight {
     background: var(--accent-color);
     color: var(--text-color);
@@ -3163,6 +3179,7 @@ footer {
     .contact-info :nth-child(3) {
         font-size: var(--font-size-base);
     }
+    
     
     .contact-highlight {
         font-size: 16px;
