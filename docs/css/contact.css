@@ -452,7 +452,7 @@ nav a.nav-btn {
     min-height: 200px;
 }
 
-.submit-btn {
+.g-recaptcha {
     background: var(--secondary-color);
     color: var(--background-light);
     border: none;
@@ -467,7 +467,7 @@ nav a.nav-btn {
     width: 560px;
 }
 
-.submit-btn:hover {
+.g-recaptcha:hover {
     background: #2c5bb8;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(63, 115, 216, 0.3);
@@ -1061,7 +1061,7 @@ footer {
         border-radius: var(--border-radius-md);
     }
     
-    .submit-btn {
+    .g-recaptcha {
         width: 100%;
         padding: var(--spacing-md);
         font-size: 14px;

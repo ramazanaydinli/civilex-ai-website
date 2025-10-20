@@ -14,7 +14,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://civilex.ai">
     <meta property="og:image" content="CivilexLogo.png">
-    <title>Contact - Civilex.AI</title>
+    <title>Civilex.AI</title>
     <!-- Font Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,6 +33,7 @@
     
     <!-- Lenis Smooth Scroll Library -->
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <!-- Header Navigation -->
@@ -145,7 +146,11 @@
                                 <textarea id="message" name="message" placeholder="Write your message" rows="4" required></textarea>
                             </div>
                             
-                            <button type="submit" class="submit-btn">Send Message</button>
+                            <button type="submit" class="submit-btn g-recaptcha" 
+                                    data-sitekey="6LdQVfArAAAAAP_f9YD8RGUyXfwoyzvr0GWKdcZ0" 
+                                    data-callback="onSubmitForm"
+                                    data-action="submit">Send Message</button>
+
                         </form>
                     </div>
                     

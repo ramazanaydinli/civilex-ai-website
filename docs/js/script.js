@@ -24,12 +24,10 @@ function initLenis() {
     requestAnimationFrame(raf);
 }
 
-
 // DOM Content Loaded event
 document.addEventListener('DOMContentLoaded', function() {
     // Lenis'i başlat
     initLenis();
-    
     // Mobile Menu Functionality
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const mobileNav = document.querySelector('.mobile-nav');
@@ -196,7 +194,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        console.log(`Current page: ${currentPage}`);
     }
     
     } // Pagination if bloğu kapanışı
@@ -229,8 +226,6 @@ document.addEventListener('DOMContentLoaded', function() {
         currentCasePage = pageNumber;
         updateCasePagination();
         
-        console.log(`Dot clicked! Page: ${pageNumber}`);
-        console.log('Current page set to:', currentCasePage);
     }
 
     // Case Studies Arrow Button Events
@@ -275,18 +270,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update case studies pagination state
     function updateCasePagination() {
-        console.log('Updating case studies pagination...');
-        console.log('Current page:', currentCasePage);
-        
         // Update ALL pagination dots in ALL containers
         const allCaseDots = document.querySelectorAll('.case-pagination-dot');
-        console.log('Total dots found:', allCaseDots.length);
         
         allCaseDots.forEach((dot, index) => {
-            const dotPosition = index % 3; // 0, 1, 2
+            const dotPosition = index % 3;
             const shouldBeActive = dotPosition + 1 === currentCasePage;
             dot.classList.toggle('active', shouldBeActive);
-            console.log(`Dot ${index + 1} (position ${dotPosition + 1}): ${shouldBeActive ? 'active' : 'inactive'}`);
         });
 
         // Update arrow button states
@@ -302,7 +292,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        console.log(`Current case study page: ${currentCasePage}`);
         
         // Re-add click events after updating
         addDotClickEvents();
@@ -412,7 +401,6 @@ document.addEventListener('DOMContentLoaded', function() {
         radioButtons.forEach(radio => {
             radio.addEventListener('change', function() {
                 if (this.checked) {
-                    console.log('Radio button changed to:', this.value);
                     updateFormForOption(this.value);
                 }
             });
@@ -420,10 +408,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Form submission
         if (contactForm) {
-            console.log('✅ Contact form found and event listener added');
+            // Invisible reCAPTCHA callback fonksiyonu (global olmalı)
+            window.onSubmitForm = async function(token) {
+                await submitContactForm(token);
+            };
+            
             contactForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                console.log('📝 Form submit event triggered');
                 
                 // Get form data
                 const formData = new FormData(this);
@@ -432,55 +423,88 @@ document.addEventListener('DOMContentLoaded', function() {
                 const message = formData.get('message');
                 const contactType = formData.get('contact-type');
                 
-                console.log('📋 Form data collected:', {
-                    fullName,
-                    email,
-                    message: message?.substring(0, 50) + '...',
-                    contactType
-                });
-                
-                // Basic validation
+                // Basic validation (reCAPTCHA tetiklenmeden önce)
                 if (!fullName || !email || !message) {
-                    showNotification('Lütfen tüm alanları doldurun.', 'error');
+                    showNotification('Please fill in all fields.', 'error');
                     return;
                 }
                 
                 if (!isValidEmail(email)) {
-                    showNotification('Lütfen geçerli bir e-posta adresi girin.', 'error');
+                    showNotification('Please enter a valid email address.', 'error');
                     return;
                 }
                 
-                // Show loading state
-                const submitBtn = this.querySelector('.submit-btn');
-                const originalText = submitBtn.textContent;
-                submitBtn.textContent = 'Gönderiliyor...';
-                submitBtn.disabled = true;
-                
-                // Simulate form submission (no backend)
-                console.log('📝 Form submitted successfully (simulation)');
-                showNotification('Mesajınız alındı! En kısa sürede size dönüş yapacağız.', 'success');
+                // Form geçerliyse reCAPTCHA otomatik tetiklenecek
+                // Butondaki g-recaptcha class sayesinde
+            });
+        }
+    }
+    
+    // Form submit fonksiyonu (reCAPTCHA'dan sonra çalışacak)
+    async function submitContactForm(recaptchaToken) {
+        const contactForm = document.getElementById('contactForm');
+        if (!contactForm) return;
+        
+        const formData = new FormData(contactForm);
+        const fullName = formData.get('fullName');
+        const email = formData.get('email');
+        const message = formData.get('message');
+        const contactType = formData.get('contact-type');
+        
+        // Show loading state
+        const submitBtn = contactForm.querySelector('.submit-btn');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+        
+        // Send to backend API
+        try {
+            const response = await fetch('http://localhost:3000/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    contactType,
+                    fullName,
+                    email,
+                    message,
+                    recaptchaToken: recaptchaToken
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                showNotification('Your message has been successfully sent!', 'success');
                 
                 // Reset form
-                this.reset();
+                contactForm.reset();
                 
                 // Reset to first option
                 const firstRadio = document.getElementById('say-hi');
                 if (firstRadio) {
                     firstRadio.checked = true;
-                    // Remove active class from all options
                     document.querySelectorAll('.form-option').forEach(option => {
                         option.classList.remove('active');
                     });
-                    // Add active class to first option
                     firstRadio.closest('.form-option').classList.add('active');
                     updateFormForOption('say-hi');
                 }
-                
-                // Reset button state
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            });
+            } else {
+                showNotification(data.message || 'An error occurred while sending the message.', 'error');
+            }
+        } catch (error) {
+            console.error('❌ Backend error:', error);
+            showNotification('Connection error. Please try again.', 'error');
         }
+        
+        // Reset button state
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        
+        // Reset reCAPTCHA
+        grecaptcha.reset();
     }
     
     // Update form based on selected option
@@ -538,7 +562,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Set background color based on type
         switch(type) {
             case 'success':
-                notification.style.backgroundColor = '#4CAF50';
+                notification.style.backgroundColor = '#3F73D8';
                 break;
             case 'error':
                 notification.style.backgroundColor = '#f44336';
@@ -570,7 +594,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Initialize contact form
-    console.log('🔧 Initializing contact form...');
     initContactForm();
     
     // Lenis utility functions
