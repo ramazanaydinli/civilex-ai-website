@@ -704,12 +704,19 @@ function initEmailForm() {
                 return;
             }
             
+            // CAPTCHA validation - Contact us sayfasındaki gibi
+            const recaptchaResponse = grecaptcha.getResponse();
+            if (!recaptchaResponse) {
+                showMessage('Please complete the CAPTCHA verification.', 'error');
+                return;
+            }
+            
             // Show loading state
             submitBtn.textContent = 'Sending...';
             submitBtn.disabled = true;
             
-            // Send email
-            sendEmail(email);
+            // Send email with CAPTCHA token
+            sendEmail(email, recaptchaResponse);
         });
     }
 }
@@ -721,9 +728,10 @@ function isValidEmail(email) {
 }
 
 // Send email function
-async function sendEmail(email) {
+async function sendEmail(email, recaptchaToken) {
     try {
         console.log('Sending email to:', email);
+        console.log('CAPTCHA token:', recaptchaToken ? 'Present' : 'Missing');
         
         const response = await fetch('http://localhost:3000/api/send-email', {
             method: 'POST',
@@ -733,7 +741,8 @@ async function sendEmail(email) {
             body: JSON.stringify({
                 email: email,
                 subject: 'PilatesAI Test Phase Registration',
-                message: `New test phase registration:\nEmail: ${email}\nDate: ${new Date().toLocaleString()}`
+                message: `New test phase registration:\nEmail: ${email}\nDate: ${new Date().toLocaleString()}`,
+                recaptchaToken: recaptchaToken
             })
         });
         
@@ -745,6 +754,8 @@ async function sendEmail(email) {
             console.log('Success response:', result);
             showMessage('Email sent successfully! Your registration has been recorded.', 'success');
             document.querySelector('.email-form-input').value = '';
+            // Reset CAPTCHA
+            grecaptcha.reset();
         } else {
             const errorData = await response.json();
             console.log('Error response:', errorData);
@@ -758,6 +769,8 @@ async function sendEmail(email) {
             stack: error.stack
         });
         showMessage(`Error: ${error.message}`, 'error');
+        // Reset CAPTCHA on error
+        grecaptcha.reset();
     } finally {
         // Reset button
         const submitBtn = document.querySelector('.email-form-submit');
@@ -799,6 +812,8 @@ function showMessage(message, type) {
         messageDiv.style.backgroundColor = '#10B981';
     } else if (type === 'error') {
         messageDiv.style.backgroundColor = '#EF4444';
+    } else if (type === 'info') {
+        messageDiv.style.backgroundColor = '#3B82F6';
     }
     
     // Add to page
@@ -819,3 +834,18 @@ function showMessage(message, type) {
         }, 300);
     }, 5000);
 }
+
+// reCAPTCHA callback functions - Contact us sayfasındaki gibi
+window.onRecaptchaSuccess = function(token) {
+    console.log('CAPTCHA completed successfully');
+    // CAPTCHA başarılı olduğunda form'u submit et
+    const emailForm = document.querySelector('.email-form');
+    if (emailForm) {
+        emailForm.dispatchEvent(new Event('submit'));
+    }
+};
+
+window.onRecaptchaExpired = function() {
+    console.log('CAPTCHA expired');
+    showMessage('CAPTCHA verification expired. Please try again.', 'error');
+};

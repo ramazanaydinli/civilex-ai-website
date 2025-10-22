@@ -416,13 +416,53 @@ app.post('/api/test-phase', contactLimiter, [
  */
 app.post('/api/send-email', async (req, res) => {
   try {
-    const { email, subject, message } = req.body;
+    const { email, subject, message, recaptchaToken } = req.body;
 
     // Validate required fields
     if (!email || !subject || !message) {
       return res.status(400).json({
         success: false,
         message: 'Email, subject and message fields are required.'
+      });
+    }
+
+    // CAPTCHA validation
+    if (!recaptchaToken) {
+      return res.status(400).json({
+        success: false,
+        message: 'CAPTCHA verification is required.'
+      });
+    }
+
+    // Verify CAPTCHA with Google
+    try {
+      const recaptchaResponse = await axios.post('https://www.google.com/recaptcha/api/siteverify', null, {
+        params: {
+          secret: process.env.RECAPTCHA_SECRET_KEY || '6LfYourSecretKeyHere',
+          response: recaptchaToken,
+          remoteip: req.ip
+        }
+      });
+
+      if (!recaptchaResponse.data.success) {
+        return res.status(400).json({
+          success: false,
+          message: 'CAPTCHA verification failed. Please try again.'
+        });
+      }
+
+      // Check score for reCAPTCHA v3 (optional, can be adjusted)
+      if (recaptchaResponse.data.score && recaptchaResponse.data.score < 0.5) {
+        return res.status(400).json({
+          success: false,
+          message: 'CAPTCHA verification failed. Please try again.'
+        });
+      }
+    } catch (recaptchaError) {
+      console.error('CAPTCHA verification error:', recaptchaError.message);
+      return res.status(500).json({
+        success: false,
+        message: 'CAPTCHA verification service unavailable. Please try again later.'
       });
     }
 
