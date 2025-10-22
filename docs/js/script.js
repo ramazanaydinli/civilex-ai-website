@@ -3,25 +3,28 @@ let lenis;
 
 // Initialize Lenis smooth scrolling
 function initLenis() {
-    lenis = new Lenis({
-        duration: 1.2,        // Scroll animasyon süresi (saniye)
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Easing function
-        orientation: 'vertical', // Scroll yönü
-        gestureOrientation: 'vertical', // Gesture yönü
-        smoothWheel: true,    // Mouse wheel için smooth scroll
-        wheelMultiplier: 1,   // Wheel hızı çarpanı
-        smoothTouch: false,   // Touch cihazlarda smooth scroll (mobil performans için)
-        touchMultiplier: 2,   // Touch hızı çarpanı
-        infinite: false,      // Sonsuz scroll
-    });
+    // Only initialize Lenis on desktop (screen width > 768px)
+    if (window.innerWidth > 768) {
+        lenis = new Lenis({
+            duration: 1.2,        // Scroll animasyon süresi (saniye)
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Easing function
+            orientation: 'vertical', // Scroll yönü
+            gestureOrientation: 'vertical', // Gesture yönü
+            smoothWheel: true,    // Mouse wheel için smooth scroll
+            wheelMultiplier: 1,   // Wheel hızı çarpanı
+            smoothTouch: false,   // Touch cihazlarda smooth scroll (mobil performans için)
+            touchMultiplier: 2,   // Touch hızı çarpanı
+            infinite: false,      // Sonsuz scroll
+        });
 
-    // RequestAnimationFrame ile sürekli güncelleme
-    function raf(time) {
-        lenis.raf(time);
+        // RequestAnimationFrame ile sürekli güncelleme
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        
         requestAnimationFrame(raf);
     }
-    
-    requestAnimationFrame(raf);
 }
 
 // DOM Content Loaded event
@@ -32,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const mobileNav = document.querySelector('.mobile-nav');
     const body = document.body;
+    let scrollPosition = 0;
     
     if (mobileMenuBtn && mobileNav) {
         mobileMenuBtn.addEventListener('click', function() {
@@ -39,11 +43,17 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileNav.classList.toggle('active');
             
             if (mobileNav.classList.contains('active')) {
+                // Save scroll position
+                scrollPosition = window.pageYOffset;
                 body.classList.add('mobile-menu-open');
                 body.style.overflow = 'hidden';
+                body.style.top = `-${scrollPosition}px`;
             } else {
+                // Restore scroll position
                 body.classList.remove('mobile-menu-open');
                 body.style.overflow = '';
+                body.style.top = '';
+                window.scrollTo(0, scrollPosition);
             }
         });
         
@@ -54,6 +64,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 mobileNav.classList.remove('active');
                 body.classList.remove('mobile-menu-open');
                 body.style.overflow = '';
+                body.style.top = '';
+                window.scrollTo(0, scrollPosition);
             });
         });
         
@@ -64,6 +76,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 mobileNav.classList.remove('active');
                 body.classList.remove('mobile-menu-open');
                 body.style.overflow = '';
+                body.style.top = '';
+                window.scrollTo(0, scrollPosition);
             }
         });
     }
@@ -100,16 +114,19 @@ document.addEventListener('DOMContentLoaded', function() {
         let autoPlayInterval;
         const autoPlayDelay = 5000; // 5 saniye
 
-    // Auto-play functionality
+    // Auto-play functionality - disabled on mobile
     function startAutoPlay() {
-        autoPlayInterval = setInterval(() => {
-            if (currentPage < totalPages) {
-                currentPage++;
-            } else {
-                currentPage = 1; // Loop back to first page
-            }
-            updatePagination();
-        }, autoPlayDelay);
+        // Only start auto-play on desktop (screen width > 768px)
+        if (window.innerWidth > 768) {
+            autoPlayInterval = setInterval(() => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                } else {
+                    currentPage = 1; // Loop back to first page
+                }
+                updatePagination();
+            }, autoPlayDelay);
+        }
     }
 
     function stopAutoPlay() {
@@ -167,6 +184,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const paginationContainer = document.querySelector('.pagination-container');
     paginationContainer.addEventListener('mouseenter', stopAutoPlay);
     paginationContainer.addEventListener('mouseleave', startAutoPlay);
+
+    // Handle window resize to update auto-play behavior
+    window.addEventListener('resize', function() {
+        stopAutoPlay();
+        startAutoPlay();
+        
+        // Reinitialize Lenis on resize
+        if (lenis) {
+            lenis.destroy();
+            lenis = null;
+        }
+        initLenis();
+    });
 
     // Update pagination state
     function updatePagination() {
@@ -655,6 +685,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
                 });
             }
+        } else {
+            // Fallback for mobile - use native scroll
+            const targetElement = typeof target === 'string' ? document.querySelector(target) : target;
+            if (targetElement) {
+                const targetPosition = targetElement.offsetTop - offset;
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
         }
     };
     
@@ -664,6 +704,12 @@ document.addEventListener('DOMContentLoaded', function() {
             lenis.scrollTo(0, {
                 duration: 1.2,
                 easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+        } else {
+            // Fallback for mobile - use native scroll
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
         }
     };
@@ -710,13 +756,7 @@ function initEmailForm() {
                 showMessage('Please complete the CAPTCHA verification.', 'error');
                 return;
             }
-            
-            // Show loading state
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-            
-            // Send email with CAPTCHA token
-            sendEmail(email, recaptchaResponse);
+        
         });
     }
 }
@@ -730,9 +770,6 @@ function isValidEmail(email) {
 // Send email function
 async function sendEmail(email, recaptchaToken) {
     try {
-        console.log('Sending email to:', email);
-        console.log('CAPTCHA token:', recaptchaToken ? 'Present' : 'Missing');
-        
         const response = await fetch('https://civilex-ai.onrender.com/api/send-email', {
             method: 'POST',
             headers: {
@@ -746,33 +783,19 @@ async function sendEmail(email, recaptchaToken) {
             })
         });
         
-        console.log('Response status:', response.status);
-        console.log('Response ok:', response.ok);
-        
         if (response.ok) {
-            const result = await response.json();
-            console.log('Success response:', result);
             showMessage('Email sent successfully! Your registration has been recorded.', 'success');
             document.querySelector('.email-form-input').value = '';
-            // Reset CAPTCHA
             grecaptcha.reset();
         } else {
             const errorData = await response.json();
-            console.log('Error response:', errorData);
             throw new Error(errorData.message || 'Email sending failed');
         }
     } catch (error) {
         console.error('Email sending error:', error);
-        console.error('Error details:', {
-            name: error.name,
-            message: error.message,
-            stack: error.stack
-        });
         showMessage(`Error: ${error.message}`, 'error');
-        // Reset CAPTCHA on error
         grecaptcha.reset();
     } finally {
-        // Reset button
         const submitBtn = document.querySelector('.email-form-submit');
         submitBtn.textContent = 'Submit';
         submitBtn.disabled = false;
@@ -837,15 +860,23 @@ function showMessage(message, type) {
 
 // reCAPTCHA callback functions - Contact us sayfasındaki gibi
 window.onRecaptchaSuccess = function(token) {
-    console.log('CAPTCHA completed successfully');
-    // CAPTCHA başarılı olduğunda form'u submit et
-    const emailForm = document.querySelector('.email-form');
-    if (emailForm) {
-        emailForm.dispatchEvent(new Event('submit'));
+    // CAPTCHA başarılı olduğunda email gönder
+    const emailInput = document.querySelector('.email-form-input');
+    const email = emailInput ? emailInput.value.trim() : '';
+    
+    if (email && isValidEmail(email)) {
+        // Show loading state
+        const submitBtn = document.querySelector('.email-form-submit');
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+        
+        // Send email with CAPTCHA token
+        sendEmail(email, token);
+    } else {
+        showMessage('Please enter a valid email address.', 'error');
     }
 };
 
 window.onRecaptchaExpired = function() {
-    console.log('CAPTCHA expired');
     showMessage('CAPTCHA verification expired. Please try again.', 'error');
 };

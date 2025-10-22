@@ -15,6 +15,7 @@ const PORT = process.env.PORT || 3000;
 // CORS Whitelist
 const allowedOrigins = [
   'https://civilex.ai',
+  'https://www.civilex.ai',
   'http://localhost:5500',
   'http://127.0.0.1:5500',
   'http://localhost:3000',
@@ -475,12 +476,7 @@ app.post('/api/send-email', async (req, res) => {
     }
 
     // Email gönderme işlemi (şimdilik console'a yazdırıyoruz)
-    console.log('=== YENİ KULLANICI EMAIL KAYDI ===');
-    console.log('Email:', email);
-    console.log('Konu:', subject);
-    console.log('Mesaj:', message);
-    console.log('Tarih:', new Date().toLocaleString('tr-TR'));
-    console.log('========================');
+    console.log('New email registration:', email);
 
     // Gerçek email gönderme servisi buraya entegre edilebilir
     // Örnek: Nodemailer, SendGrid, AWS SES vb.
