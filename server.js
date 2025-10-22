@@ -16,6 +16,10 @@ const PORT = process.env.PORT || 3000;
 const allowedOrigins = [
   'https://civilex.ai',
   'https://www.civilex.ai',
+  'http://localhost:5500',
+  'http://127.0.0.1:5500',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
 ];
 
 const corsOptions = {
@@ -317,6 +321,142 @@ app.post('/api/contact', contactLimiter, contactValidationRules, async (req, res
     return res.status(500).json({
       success: false,
       message: errorMessage
+    });
+  }
+});
+
+/**
+ * Test Phase Email Endpoint
+ * POST /api/test-phase
+ * Rate Limited: 5 requests per hour
+ */
+app.post('/api/test-phase', contactLimiter, [
+  body('email')
+    .trim()
+    .notEmpty().withMessage('Email is required')
+    .isEmail().withMessage('Invalid email format')
+    .normalizeEmail()
+    .isLength({ max: 100 }).withMessage('Email is too long')
+], async (req, res) => {
+  try {
+    // Check validation results
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: errors.array()[0].msg,
+        errors: errors.array()
+      });
+    }
+
+    const { email } = req.body;
+    const sanitizedEmail = email.toLowerCase().trim();
+
+    // Build email data for test phase signup
+    const emailData = {
+      sender: {
+        name: "Civilex.AI",
+        email: process.env.EMAIL_USER
+      },
+      to: [{
+        email: process.env.MAILTO,
+        name: "Civilex Team"
+      }],
+      replyTo: {
+        email: sanitizedEmail,
+        name: "Test Phase Participant"
+      },
+      subject: `Test Phase Signup - ${sanitizedEmail}`,
+      htmlContent: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px;">
+            Test Phase Signup
+          </h2>
+          
+          <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <p><strong>📧 Email:</strong> ${sanitizedEmail}</p>
+            <p><strong>📅 Date:</strong> ${new Date().toLocaleString()}</p>
+          </div>
+          
+          <div style="background-color: #ffffff; padding: 20px; border: 1px solid #dee2e6; border-radius: 8px;">
+            <h3 style="color: #555; margin-top: 0;">📝 Message:</h3>
+            <p style="line-height: 1.6; color: #333;">A new user has signed up for the PilAltes test phase.</p>
+          </div>
+          
+          <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+            <p style="color: #666; font-size: 14px;">
+              This signup was made through the Civilex.AI website test phase form.
+            </p>
+          </div>
+        </div>
+      `
+    };
+    
+    await sendEmail(emailData);
+
+    // Success response
+    return res.json({
+      success: true,
+      message: 'Thank you! You\'ve been added to our test phase list.'
+    });
+
+  } catch (error) {
+    console.error('Test phase signup error:', error.message);
+
+    return res.status(500).json({
+      success: false,
+      message: 'An error occurred while processing your signup. Please try again.'
+    });
+  }
+});
+
+/**
+ * Send Email Endpoint
+ * POST /api/send-email
+ */
+app.post('/api/send-email', async (req, res) => {
+  try {
+    const { email, subject, message } = req.body;
+
+    // Validate required fields
+    if (!email || !subject || !message) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email, subject and message fields are required.'
+      });
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please enter a valid email address.'
+      });
+    }
+
+    // Email gönderme işlemi (şimdilik console'a yazdırıyoruz)
+    console.log('=== YENİ KULLANICI EMAIL KAYDI ===');
+    console.log('Email:', email);
+    console.log('Konu:', subject);
+    console.log('Mesaj:', message);
+    console.log('Tarih:', new Date().toLocaleString('tr-TR'));
+    console.log('========================');
+
+    // Gerçek email gönderme servisi buraya entegre edilebilir
+    // Örnek: Nodemailer, SendGrid, AWS SES vb.
+
+    res.json({
+      success: true,
+      message: 'Email sent successfully!'
+    });
+
+  } catch (error) {
+    console.error('Email sending error:', error.message);
+    
+    res.status(500).json({
+      success: false,
+      message: 'An error occurred while sending the email. Please try again.'
     });
   }
 });

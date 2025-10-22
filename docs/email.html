@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html class="" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Test Phase Participation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#000000",
+                        "background-light": "#f7f7f7",
+                        "background-dark": "#191919"
+                    },
+                    fontFamily: {
+                        display: "Inter"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    }
+                }
+            }
+        };
+    </script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display flex items-center justify-center min-h-screen p-4">
+<div class="bg-primary w-full max-w-4xl rounded-lg shadow-lg p-8 md:p-15">
+<div class="grid md:grid-cols-2 gap-8 items-center">
+<div class="text-white">
+<h2 class="text-2xl md:text-3xl font-bold mb-2 whitespace-nowrap">Participate in the Test Phase</h2>
+<p class="text-lg opacity-80">Be the first in line to try the app.</p>
+</div>
+<form class="flex flex-col sm:flex-row gap-4">
+<input class="flex-grow px-4 py-3 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50" placeholder="Your email address" type="email"/>
+<button class="bg-white text-primary font-bold px-6 py-3 rounded-md hover:bg-gray-100 transition-colors" type="submit">SUBMIT</button>
+</form>
+</div>
+</div>
+
+</body></html>

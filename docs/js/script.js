@@ -596,6 +596,53 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize contact form
     initContactForm();
     
+    // Explore Button Animation Functionality
+    function initExploreButtonAnimation() {
+        const exploreBtn = document.querySelector('.explore-btn');
+        
+        if (exploreBtn) {
+            exploreBtn.addEventListener('click', function(e) {
+                // Prevent default action if needed
+                e.preventDefault();
+                
+                // Don't trigger animation if already animating
+                if (this.classList.contains('extending')) {
+                    return;
+                }
+                
+                // If button is extended, shrink it back
+                if (this.classList.contains('extended')) {
+                    this.classList.remove('extended');
+                    this.classList.add('shrinking');
+                    
+                    // After shrinking animation completes
+                    setTimeout(() => {
+                        this.classList.remove('shrinking');
+                    }, 600);
+                    return;
+                }
+                
+                // If button is normal, extend it
+                this.classList.remove('extending', 'extended', 'shrinking');
+                
+                // Trigger reflow to ensure class removal is processed
+                this.offsetHeight;
+                
+                // Add extending class to start animation
+                this.classList.add('extending');
+                
+                // After animation completes, add extended class
+                setTimeout(() => {
+                    this.classList.remove('extending');
+                    this.classList.add('extended');
+                }, 600); // Match animation duration
+            });
+        }
+    }
+    
+    // Initialize explore button animation
+    initExploreButtonAnimation();
+    
     // Lenis utility functions
     // Smooth scroll to specific element
     window.smoothScrollTo = function(target, offset = 0) {
@@ -629,4 +676,146 @@ document.addEventListener('DOMContentLoaded', function() {
     window.resumeLenis = function() {
         if (lenis) lenis.start();
     };
+    
+    // Email Form Functionality
+    initEmailForm();
 });
+
+// Email Form Initialization
+function initEmailForm() {
+    const emailForm = document.querySelector('.email-form');
+    const emailInput = document.querySelector('.email-form-input');
+    const submitBtn = document.querySelector('.email-form-submit');
+    
+    if (emailForm && emailInput && submitBtn) {
+        emailForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = emailInput.value.trim();
+            
+            // Email validation
+            if (!email) {
+                showMessage('Please enter your email address.', 'error');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showMessage('Please enter a valid email address.', 'error');
+                return;
+            }
+            
+            // Show loading state
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            // Send email
+            sendEmail(email);
+        });
+    }
+}
+
+// Email validation function
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Send email function
+async function sendEmail(email) {
+    try {
+        console.log('Sending email to:', email);
+        
+        const response = await fetch('http://localhost:3000/api/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                subject: 'PilatesAI Test Phase Registration',
+                message: `New test phase registration:\nEmail: ${email}\nDate: ${new Date().toLocaleString()}`
+            })
+        });
+        
+        console.log('Response status:', response.status);
+        console.log('Response ok:', response.ok);
+        
+        if (response.ok) {
+            const result = await response.json();
+            console.log('Success response:', result);
+            showMessage('Email sent successfully! Your registration has been recorded.', 'success');
+            document.querySelector('.email-form-input').value = '';
+        } else {
+            const errorData = await response.json();
+            console.log('Error response:', errorData);
+            throw new Error(errorData.message || 'Email sending failed');
+        }
+    } catch (error) {
+        console.error('Email sending error:', error);
+        console.error('Error details:', {
+            name: error.name,
+            message: error.message,
+            stack: error.stack
+        });
+        showMessage(`Error: ${error.message}`, 'error');
+    } finally {
+        // Reset button
+        const submitBtn = document.querySelector('.email-form-submit');
+        submitBtn.textContent = 'Submit';
+        submitBtn.disabled = false;
+    }
+}
+
+// Show message function
+function showMessage(message, type) {
+    // Remove existing messages
+    const existingMessage = document.querySelector('.email-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    // Create message element
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `email-message email-message-${type}`;
+    messageDiv.textContent = message;
+    
+    // Add styles
+    messageDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 8px;
+        color: white;
+        font-weight: 500;
+        z-index: 1000;
+        max-width: 400px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+    `;
+    
+    if (type === 'success') {
+        messageDiv.style.backgroundColor = '#10B981';
+    } else if (type === 'error') {
+        messageDiv.style.backgroundColor = '#EF4444';
+    }
+    
+    // Add to page
+    document.body.appendChild(messageDiv);
+    
+    // Animate in
+    setTimeout(() => {
+        messageDiv.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        messageDiv.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (messageDiv.parentNode) {
+                messageDiv.remove();
+            }
+        }, 300);
+    }, 5000);
+}

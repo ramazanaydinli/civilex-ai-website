@@ -125,11 +125,10 @@ h4 {
 }
 
 .section {
-    padding: var(--spacing-xxl) 0;
+    padding: var(--spacing-xxl);
 }
 
 /* OVERVIEW SECTION */
-
 .overview-section {
     background: var(--text-white);
     padding: 0;
@@ -269,7 +268,7 @@ nav a.nav-btn {
 
 /* Mobile Navigation - Hidden by default */
 .mobile-nav {
-    display: none !important;
+    display: none;
 }
 
 /* HERO SECTION */
@@ -279,15 +278,17 @@ nav a.nav-btn {
     grid-template-columns: 1fr 1fr;
     gap: 120px;
     align-items: center;
-    min-height: 500px;
-    padding: 20px 0;
+}
+
+.hero-text {
+    padding-bottom: var(--spacing-lg);
 }
 
 .hero-text h1 {
     font-size: var(--font-size-3xl);
     font-weight: var(--font-weight-medium);
     margin-bottom: var(--spacing-lg);
-    line-height: var(--line-height-tight);
+    line-height: var(--line-height-normal);
     color: var(--text-color);
 }
 
@@ -296,23 +297,12 @@ nav a.nav-btn {
     color: var(--text-color);
     margin-bottom: var(--spacing-xl);
     line-height: 28px;
-    max-width: 400px;
-    font-style: normal;
+    max-width: 500px;
 }
 
 .highlight {
     color: var(--secondary-color);
-    font-weight: var(--font-weight-medium);
-}
-
-.explore-btn {
-    background: var(--text-color);
-    color: var(--text-white);
-    padding: var(--spacing-lg) var(--spacing-xl);
-    border-radius: var(--border-radius-md);
-    font-size: 16px;
     font-weight: var(--font-weight-semibold);
-    cursor: pointer;
 }
 
 .hero-image {
@@ -323,7 +313,6 @@ nav a.nav-btn {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    padding: 20px;
 }
 
 .phone-container {
@@ -331,7 +320,7 @@ nav a.nav-btn {
     display: inline-block;
     margin: 0 auto;
     width: 100%;
-    max-width: 502px;
+    max-width: 501px;
     height: 600px;
     animation: float 3s ease-in-out infinite;
 }
@@ -467,8 +456,129 @@ nav a.nav-btn {
     color: rgba(255, 255, 255, 0.8);
 }
 
-/* PROJECTS SECTION */
+/* Participate Button Section */
+.email-form-container {
+    background: var(--primary-color);
+    width: 100%;
+    max-width: var(--container-max-width);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+}
 
+.email-form-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xxl);
+    align-items: center;
+}
+
+.email-form-text {
+    text-align: left;
+}
+
+.email-form-title {
+    color: var(--text-white);
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-sm);
+    line-height: var(--line-height-tight);
+    white-space: nowrap;
+}
+
+.email-form-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+}
+
+.email-form {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.email-form-input {
+    background: var(--text-white);
+    border: none;
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    font-size: var(--font-size-base);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    outline: none;
+    transition: all var(--transition-fast);
+    flex: 1;
+    min-width: 200px;
+}
+
+.email-form-input::placeholder {
+    color: var(--text-light);
+}
+
+.email-form-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.email-form-submit {
+    background: var(--text-white);
+    color: var(--text-color);
+    border: none;
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.email-form-submit:hover {
+    background: #f3f3f3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .email-form-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+        text-align: center;
+    }
+    
+    .email-form-text {
+        text-align: center;
+    }
+    
+    .email-form-title {
+        white-space: normal;
+        font-size: var(--font-size-xl);
+    }
+    
+    .email-form {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .email-form-input {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .email-form-submit {
+        width: 100%;
+    }
+    
+    .email-form-container {
+        padding: var(--spacing-lg);
+    }
+}
+
+/* PROJECTS SECTION */
 /* Main Project Card */
 .project-main-card {
     background: var(--background-light);
