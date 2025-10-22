@@ -733,7 +733,7 @@ async function sendEmail(email, recaptchaToken) {
         console.log('Sending email to:', email);
         console.log('CAPTCHA token:', recaptchaToken ? 'Present' : 'Missing');
         
-        const response = await fetch('http://localhost:3000/api/send-email', {
+        const response = await fetch('https://civilex-ai.onrender.com/api/send-email', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
