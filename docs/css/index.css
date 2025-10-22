@@ -543,9 +543,7 @@ nav a.nav-btn {
 }
 
 /* CAPTCHA Styles - Contact us sayfasındaki gibi submit butonunda */
-.email-form-submit.g-recaptcha {
-    /* CAPTCHA submit butonunda entegre */
-}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {

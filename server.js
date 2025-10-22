@@ -438,7 +438,7 @@ app.post('/api/send-email', async (req, res) => {
     try {
       const recaptchaResponse = await axios.post('https://www.google.com/recaptcha/api/siteverify', null, {
         params: {
-          secret: process.env.RECAPTCHA_SECRET_KEY || '6LfYourSecretKeyHere',
+          secret: process.env.RECAPTCHA_SECRET_KEY,
           response: recaptchaToken,
           remoteip: req.ip
         }
