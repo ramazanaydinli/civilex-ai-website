@@ -485,7 +485,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Show loading state
         const submitBtn = contactForm.querySelector('.submit-btn');
-        const originalText = submitBtn.textContent;
+        const originalText = 'Send';
         submitBtn.textContent = 'Sending...';
         submitBtn.disabled = true;
         
@@ -532,7 +532,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Reset button state
-        submitBtn.textContent = originalText;
+        submitBtn.textContent = 'Send';
         submitBtn.disabled = false;
         
         // Reset reCAPTCHA
@@ -799,7 +799,7 @@ async function sendEmail(email, recaptchaToken) {
         grecaptcha.reset();
     } finally {
         const submitBtn = document.querySelector('.email-form-submit');
-        submitBtn.textContent = 'Submit';
+        submitBtn.textContent = 'Send';
         submitBtn.disabled = false;
     }
 }
@@ -834,9 +834,9 @@ function showMessage(message, type) {
     `;
     
     if (type === 'success') {
-        messageDiv.style.backgroundColor = '#10B981';
+        messageDiv.style.backgroundColor = '#3F73D8';
     } else if (type === 'error') {
-        messageDiv.style.backgroundColor = '#EF4444';
+        messageDiv.style.backgroundColor = '#f44336';
     } else if (type === 'info') {
         messageDiv.style.backgroundColor = '#3B82F6';
     }

@@ -475,11 +475,48 @@ app.post('/api/send-email', async (req, res) => {
       });
     }
 
-    // Email gönderme işlemi (şimdilik console'a yazdırıyoruz)
-    console.log('New email registration:', email);
-
-    // Gerçek email gönderme servisi buraya entegre edilebilir
-    // Örnek: Nodemailer, SendGrid, AWS SES vb.
+    // Build email data for Brevo API
+    const emailData = {
+      sender: {
+        name: "Civilex.AI",
+        email: process.env.EMAIL_USER
+      },
+      to: [{
+        email: process.env.MAILTO,
+        name: "Civilex Team"
+      }],
+      replyTo: {
+        email: email,
+        name: "Test Phase Participant"
+      },
+      subject: `Test Phase Signup - ${email}`,
+      htmlContent: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px;">
+            Test Phase Signup
+          </h2>
+          
+          <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <p><strong>📧 Email:</strong> ${email}</p>
+            <p><strong>📅 Date:</strong> ${new Date().toLocaleString()}</p>
+          </div>
+          
+          <div style="background-color: #ffffff; padding: 20px; border: 1px solid #dee2e6; border-radius: 8px;">
+            <h3 style="color: #555; margin-top: 0;">📝 Message:</h3>
+            <p style="line-height: 1.6; color: #333;">A new user has signed up for the PilAltes test phase.</p>
+          </div>
+          
+          <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+            <p style="color: #666; font-size: 14px;">
+              This signup was made through the Civilex.AI website test phase form.
+            </p>
+          </div>
+        </div>
+      `
+    };
+    
+    // Send email via Brevo API
+    await sendEmail(emailData);
 
     res.json({
       success: true,
